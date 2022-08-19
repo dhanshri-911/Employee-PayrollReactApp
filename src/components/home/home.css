@@ -1,0 +1,138 @@
+#payroll-table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#payroll-table td, #payroll-table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#payroll-table tr:nth-child(even){background-color: #f2f2f2;}
+
+#payroll-table tr:hover {background-color: #ddd;}
+
+#payroll-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+
+
+ul {
+list-style-type: none;
+margin: 0;
+padding: 0;
+overflow: hidden;
+}
+
+li {
+float: right;
+border-right:1px solid #bbb;
+}
+
+li:last-child {
+border-right: none;
+}
+
+li a {
+display: block;
+color:red;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+background-color: rgb(180, 157, 157);
+}
+.add-button {
+  font: normal normal normal 22px/29px Roboto;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+  background: #82a70c 0% 0% no-repeat padding-box;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 18px;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+
+.table-main
+{
+    width: 80%;
+    margin: 0 auto;
+    overflow: auto;
+}
+
+.table
+{
+    background-color: #82a70c;
+    width: 80%;
+    margin: 0 auto;
+    overflow: auto;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+    min-width: 800px;
+}
+
+td, th 
+{
+    text-align: left;
+    padding: 5px 8px;
+    /* border: 1px solid #dddddd; */
+}
+
+th
+{
+    background: #82a70c 0% 0% no-repeat padding-box;
+    border-radius: 3px 3px 0px 0px;
+    text-align: left;
+    font: normal normal medium 18px/24px Roboto;
+    letter-spacing: 0px;
+    color: #ffffff;
+    text-transform: uppercase;
+    opacity: 1;
+    border: 0px solid #dddddd;
+}
+
+tr:not(:first-child)
+{
+    background: #ffffff 0% 0% no-repeat padding-box;
+    border: 1px solid #e3e3e3;
+    border-radius: 3px;
+}
+
+td
+{
+    font: normal normal normal 14px/21px Roboto;
+    letter-spacing: 0px;
+    color: #3d3d3d;
+    opacity: 1;
+}
+
+td:first-child
+{
+    display: flex;
+    align-items: center;
+}
+
+td img:first-child { margin-right: 10px;}
+
+td img { cursor: pointer;}
+
+.dept-label
+{
+    background-color: #e9fea5;
+    border-radius: 40%;
+    width: fit-content;
+    padding: 1px 7px;
+    text-align: center;
+    font-size: 14px;
+    display: inline-block;
+    font-weight: 300;
+    margin-bottom: 8px;
+}
