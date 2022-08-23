@@ -14,5 +14,13 @@ class EmployeeService {
         getEmployee(employee_id){
             return axios.get(`${this.baseUrl}/get/{employeeId}`)
         }
+        updateEmployee(employee_id,data){
+            return axios.put(`${this.baseUrl}/edit/{employee_id}`,data);
+        }
+    
+        deleteEmployee(employeeId){
+            return axios.delete(`${this.baseUrl}/remove/${employeeId}`);
+        }
+    
     }
     export default new EmployeeService();

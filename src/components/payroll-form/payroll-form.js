@@ -9,22 +9,16 @@ import profile4 from '../../assets/Ellipse -8.png';
 import EmployeeService from '../../service/EmployeeService';
 
 
-
-
- class Payrollform extends React.Component {
-
-
-    
+class Payrollform extends React.Component {
     constructor() {
         super()
-        // this.employeeService = new EmployeeService();
         this.state = {
             allDepartment: [
                 'HR', 'Sales', 'Finance', 'Engineer', 'Others'
             ],
             name: '',
             gender: '',
-            department: "",
+            department: [],
             day:'',
             month:'',
             year:'',
@@ -34,23 +28,7 @@ import EmployeeService from '../../service/EmployeeService';
             note: '',
             nameError: '',
         }
-       // this.changeDepartmentHandler = this.changeDepartmentHandler.bind(this);
-
     }
-//     changeDepartmentHandler = (event) => {
-//         // console.log(event.target.checked);
-//         if (this.isCheckBoxChecked(event.target.value)) {
-//             console.log(event.target.value);
-//             event.target.checked = false;
-//             console.log(event.target.checked);
-//         }
-
-//         if (this.state.department.indexOf(event.target.value) > -1) {
-//             this.state.department.splice(this.state.department.indexOf(event.target.value), 1);
-//         } else {
-//             this.state.department.push(event.target.value);
-//         }
-// }
 
     changeValue = (event) => {
         this.setState({ [event.target.name]: event.target.value })
@@ -65,47 +43,33 @@ import EmployeeService from '../../service/EmployeeService';
         else this.setState({ nameError: 'Invalid Name' })
     }
 
-validData = (data) => {
-    let isValid = true;
-    if(data.nameError !== '')
-    {
-        isValid = false;
+    validData = (data) => {
+        let isValid = true;
+        if(data.nameError !== ''){
+            isValid = false;
+        }
+        return isValid;
     }
-    return isValid;
-}
 
-// isCheckBoxChecked(deptName) {
-//     if (this.state.department.indexOf(deptName) > -1) {
-//         console.log(this.state.department.indexOf(deptName));
-//         return true;
-//     }
-//     return false;
-// }
+    onCheckChange = (name) => {
+        let index = this.state.department.indexOf(name);
+        let checkArray = [...this.state.department];
+        console.log(checkArray)
+        if (index > -1)  checkArray.splice(index, 1);
+        else checkArray.push(name);
+        this.setState({ department: checkArray });
+    };
 
-onCheckChange = (name) => {
-    let index = this.state.department.indexOf(name);
-    let checkArray = [this.state.department]
-    if (index > -1)
-        checkArray.splice(index, 1);
-    else
-        checkArray.push(name);
-    this.setState({ department: checkArray });
-}
-
-getChecked = (name) => {
-  return this.state.department && this.state.department.includes(name);
-}
-
-
+    getChecked = (name) => {
+        return this.state.department && this.state.department.includes(name);
+    }
 
     save = async (Event) => {
         Event.preventDefault();
-
         if(!this.validData(this.state)){
             console.log("Error Present");
             return;
         }
-
         this.employeePayrollObject = {
             id : this.state.id,
             name : this.state.name,
@@ -118,10 +82,7 @@ getChecked = (name) => {
             
         }
         console.log(this.employeePayrollObject);
-
-    //   TODOLIST;
       EmployeeService
-    // this.employeeService
       .addEmployee(this.employeePayrollObject)
       .then((data)=>{
         console.log(data);
@@ -135,40 +96,16 @@ getChecked = (name) => {
     }
     render(){
         return(
-           
-<div>
-            {/* <div>
-                <header className="header-content header">
-                    <div className="logo-content">
-                        <img src={logo} alt="logo"/>
-                        
-                        <div>
-                            <span className="emp-text">EMPLOYEE</span><br/>
-                            <span className="emp-text emp-payroll">PAYROLL</span>
-                        </div>
-                    </div>
-                </header>
-            </div> */}
-
-
-            <Header/>
-
-
-            <div className='form-content'>
-
-               <form className="form"  action="#" onReset={this.reset} onSubmit={this.save}>
-
-                            <div className="form-head">Employee Payroll Form
-                            </div>
-
+           <div>
+               <Header/>
+                <div className='form-content'>
+                   <form className="form"  action="#" onReset={this.reset} onSubmit={this.save}>
+                        <div className="form-head">Employee Payroll Form</div>
                         <div className="row-content">
                             <label className="label text" htmlFor="name">Name :</label>
                             <input className="input" type="text" id="name" name="name" onChange={this.onNameChange} value={this.state.name}  placeholder="Your name.." required/>
                             <error-output className="text-error" htmlFor="text">{this.state.nameError}</error-output>
                         </div>
-
-
-
                         <div className="row-content">
                             <label className="label text" htmlFor="profile">Profile image :</label>
                             <div className="profile-radio-content">
@@ -194,78 +131,45 @@ getChecked = (name) => {
                                 </label>
                             </div>       
                         </div>
-
-
                     <div className="row-content">
-                   <label className="label text" htmlFor="gender">Gender</label>
-                    <select
-                      className="input"
-                      value={this.state.gender}
-                      name= "gender"
-                      onChange={this.changeValue}
+                        <label className="label text" htmlFor="gender">Gender</label>
+                            <select
+                                className="input"
+                                value={this.state.gender}
+                                name= "gender"
+                                onChange={this.changeValue}
                                     required>
-                    <option value="none" selected disabled hidden>Select an Option</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                    </select>
+                            <option value="none" selected disabled hidden>Select an Option</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            </select>
                     </div>
-
-
-                  <div className="row-content">
-                            <label className="label text" for="department">Department</label>
-                            {/* <div>
-                                <input type="checkbox" id="hr" name="department" value="HR" checked={this.isCheckBoxChecked("HR")} onChange={this.changeDepartmentHandler}/>
-                                <label className="text" for="hr">HR</label>
-                                <input type="checkbox" id="sales" name="department" value="Sales" checked={this.isCheckBoxChecked("Sales")} onChange={this.changeDepartmentHandler}/>
-                                <label className="text" for="sales">Sales</label>
-                                <input type="checkbox" id="finance" name="department" value="Finance"  checked={this.isCheckBoxChecked("Finance")} onChange={this.changeDepartmentHandler}/>
-                                <label className="text" for="finance">Finance</label>
-                                <input type="checkbox" id="engineer" name="department" value="Engineer" checked={this.isCheckBoxChecked("Engineer")} onChange={this.changeDepartmentHandler}/>
-                                <label className="text" for="engineer">Engineer</label>
-                                <input type="checkbox" id="others" name="department" value="Others" checked={this.isCheckBoxChecked("Others")} onChange={this.changeDepartmentHandler}/>
-                                <label className="text" for="others">Others</label>
-                            </div> */}
-
-                            <div>
-                            {this.state.allDepartment.map((item )=> (
-                                <span key={item}>
-                                    <input  
+                    <div className="row-content">
+                        <label className="label text" htmlFor="departments">Department</label>
+                        <div>
+                            {this.state.allDepartment.map((item ) => (
+                            <span key={item}>
+                                <input  
                                     type="checkbox" 
                                     name={item} 
                                     onChange={() => this.onCheckChange(item)} 
                                     checked={this.getChecked(item)}
                                     value={item} />
-                                    <label className="text" htmlFor={item}>{item}</label>
-                                </span>
-                                ))}
-                            </div>
+                                <label className="text" htmlFor={item}>{item}</label>
+                            </span>
+                            ))}
                         </div>
+                    </div>
 
                     <div className="row-content">
-                            <label className="label text" for="salary">Salary: </label>
-                            <input className="input" type="text" name="salary" id="salary" value={this.state.salary} onChange={this.changeValue}/>
-                        </div>
-
-                         {/* <div className="row-content">
-                            <label className="label text" htmlFor="startDate">Start Date</label>
-                            <select onChange={this.changeValue} id="day " name='day'>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                            <select onChange={this.changeValue} id="month " name='month'>
-                                <option value="Jan">January</option>
-                                <option value="Feb">February</option>
-                            </select>
-                            <select onChange={this.changeValue} id="year " name='year'>
-                            <option value="2020">2020</option>
-                            </select> */}
-                            
-                            
-                            <div className="row-content">
+                        <label className="label text" for="salary">Salary: </label>
+                        <input className="input" type="text" name="salary" id="salary" value={this.state.salary} onChange={this.changeValue}/>
+                    </div>
+                        <div className="row-content">
                             <label className="label text" htmlFor="joiningDate">Start Date</label>
                             <div id="date">
                                 <select name="day" value={this.state.day}  id="day" onChange={this.changeValue}>
-                                <option value="day">Day</option>
+                                    <option value="day">Day</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -299,8 +203,7 @@ getChecked = (name) => {
                                     <option value="31">31</option>                                            
                                 </select>
                                 <select name="month"  value={this.state.month}  id="month" onChange={this.changeValue}>
-                                <option value="month">Month</option>
-
+                                    <option value="month">Month</option>
                                     <option value="Jan">January</option>
                                     <option value="Feb">Febuary</option>
                                     <option value="Mar">March</option>
@@ -315,7 +218,7 @@ getChecked = (name) => {
                                     <option value="Dec">December</option>
                                 </select >
                                 <select value={this.state.year}  name="year" id="year" onChange={this.changeValue}>
-                                <option value="">Year</option>
+                                    <option value="">Year</option>
                                     <option value="2021">2021</option>
                                     <option value="2020">2020</option>
                                     <option value="2019">2019</option>
@@ -326,12 +229,10 @@ getChecked = (name) => {
                             </div>
                             <error-output className="date-error" for="joiningDate"></error-output>
                         </div>
-
                         <div className="row-content">
                             <label className="label text" for="notes">Notes</label>
                             <textarea name="note" id="notes" className="input" value={this.state.note} onChange={this.changeValue} placeholder="" style={{height: 100}}></textarea>
                         </div>
-
                         <div className="button-content">
                             <a href="/Home" className="resetButton button cancelButton">Cancel</a>
                             <div className="submit-reset">
@@ -339,13 +240,9 @@ getChecked = (name) => {
                                 <button type="reset" className="resetButton button">Reset</button>
                             </div>
                         </div>
-
-                </form>
-
+                   </form>
             </div>
   </div>
-        )
-    }
-}
+)}}
 
 export default Payrollform;

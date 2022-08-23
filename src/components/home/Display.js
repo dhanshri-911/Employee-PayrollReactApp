@@ -10,8 +10,6 @@ import '../home/home.css'
 import EmployeeService from "../../service/EmployeeService";
 
 
-
-
 class Display extends React.Component {
 
 constructor(props){
@@ -19,23 +17,50 @@ constructor(props){
     // this.employeeService = new EmployeeService();
 }
 
-remove = (employeeObject) => {
-    this.props.deleteEmployee(employeeObject);
-};
+// remove = (employeeObject) => {
+//     this.props.deleteEmployee(employeeObject);
+// };
 
-update = (employeeObject) => {
-    this.props.updateEmployee(employeeObject);
-};
+// update = (employeeObject) => {
+//     this.props.updateEmployee(employeeObject);
+// };
 
 componentDidMount() {
     this.render();
 }
+
+// updateEmployee = (employeeId) => {
+//   this.props.history.push(`add-employee/${employeeId}`);
+// };
+
+
+handleDeleteEmployeeClick(employeeId) {
+  console.log(employeeId)
+  var answer = window.confirm("Data once deleted cannot be restored!! Do you wish to continue ?");
+  if (answer === true){
+  EmployeeService.deleteEmployee(employeeId)
+   .then((res) => {
+    
+          alert("Data Deleted Successfully!!");
+          console.log(res.data.message);
+      window.location.reload();
+      this.props.getEmployeeList();
+    
+   });
+  }
+      else{
+        console.log("Not delete");
+      }
+  
+}
+
 
 render(){
     return (
         <table id="table-display" className="table">
           <tbody>
             <tr key={-1}>
+             <th>ID</th>
               <th>ProfilePic</th>
               <th>Name</th> 
               <th>Gender</th>
@@ -50,6 +75,7 @@ render(){
             {this.props.employeeArray &&
               this.props.employeeArray.map((element) => (
                 <tr key={element.employeeId}>
+                   <td>{element.employeeID}</td>
                   <td><img className="profile" alt="" src={
                       element.profilePic ===
                       '../../assets/Ellipse -3.png'
@@ -63,6 +89,7 @@ render(){
                         : profile4
                   }
                   /></td>
+                 
                   <td>{element.name}</td>
                   <td>{element.gender}</td>
                   <td>{element.department}
@@ -75,9 +102,12 @@ render(){
                   <td>{element.joiningDate}</td>
                   <td>{element.note}</td>
                  
-
-                  <td><img onClick={() => this.remove(element)} alt="delete" src={deleteIcon}/>
-                  <img onClick={() => this.update(element)} alt="edit" src={editIcon}/></td>
+                  <td><img onClick={() => this.handleDeleteEmployeeClick(element.employeeID)} alt="delete" src={deleteIcon}/>
+                
+                  <img 
+                  onClick={() => this.update(element.employeeID)} 
+                  alt="edit" 
+                  src={editIcon}/></td>
                 </tr>
               ))}
           </tbody>

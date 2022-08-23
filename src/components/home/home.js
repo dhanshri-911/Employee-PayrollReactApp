@@ -100,7 +100,7 @@ componentDidMount() {
 <div className="main-content">
               <div className="sub-header-content">
                   <div className="emp-detail-text">
-                      Employee Details <div className="emp-count">{this.state.count}</div>
+                  <div className="emp-count">{this.state.count}</div>
                   </div>
                   {/* <a href="/" className="add-button"> */}
                   {/* <img src={add} alt="add"/> */}
@@ -109,7 +109,6 @@ componentDidMount() {
               <div>
                   <Display
                       updateEmployee={this.update}
-                      deleteEmployee={this.remove}
                       employeeArray={this.state.employeeList}
                   />
               </div>
